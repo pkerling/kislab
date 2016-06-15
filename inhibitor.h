@@ -55,7 +55,7 @@ public:
   /**
    * Get whether ball release is currently inhibited
    */
-  bool isInhibited()
+  bool isInhibited() const
   {
     return (mInhibitRounds != 0);
   }

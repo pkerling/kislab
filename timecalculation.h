@@ -25,7 +25,7 @@ public:
    * The coefficients were determined by linear regression applied to actual measurement
    * data of the turntable round times.
    */
-  unsigned long interpolateNextTurnTime(unsigned long lastTurnTime)
+  unsigned long interpolateNextTurnTime(unsigned long lastTurnTime) const
   {
     double x = lastTurnTime;
     if (lastTurnTime < 2000000UL) {
@@ -55,7 +55,7 @@ public:
    * \return time in µs to wait until the ball should be released, negative in case
    *                    no calculation is possible
    */
-  long operator()(unsigned long lastTurnTime, unsigned long timeInRound)
+  long operator()(unsigned long lastTurnTime, unsigned long timeInRound) const
   {
     // First check the input: Bail out if turn time is above 8 s, no meaningful
     // calculation is possible then

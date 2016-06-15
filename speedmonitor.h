@@ -94,7 +94,7 @@ public:
    * Get the last cycle measurement
    * \return turn time (last raw cycle time multiplied by \ref mFactor) in µs
    */
-  unsigned long turnTimeUS()
+  unsigned long turnTime() const
   {
     return mTurnTime;
   }
@@ -103,7 +103,7 @@ public:
    * Get the time the last measurement was taken
    * \return when the last measurement was taken in µs since Arduino boot
    */
-  unsigned long lastMeasurementTimeUS()
+  unsigned long lastMeasurementTime() const
   {
     return mLastTime;
   }
