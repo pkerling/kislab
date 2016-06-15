@@ -8,11 +8,17 @@
 #include "timecalculation.h"
 #include "statemachine.h"
 
+/// Global inhibitor
 Inhibitor inhibitor;
+/// Global speed monitor using the hall sensor, measuring full cycles
 SpeedMonitor hallSpeedMonitor(PIN_HALL_SENSOR);
+/// Global speed monitor using the light sensor, measuring half cycles
 SpeedMonitor lightSpeedMonitor(PIN_LIGHT_SENSOR, 12, true);
+/// Global servo controller
 ServoControl servoControl(PIN_SERVO);
+/// Global release time calculator
 TimeCalculation timeCalculation;
+/// Global state machine
 StateMachine stateMachine(servoControl);
 
 /**
