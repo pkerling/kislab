@@ -32,10 +32,8 @@ public:
         unsigned long now = micros();
         unsigned long dif = now - mLastTime;
         mTurnTime = dif * mFactor;
-        #ifdef DEBUG
-        Serial.print("tt new: ");
-        Serial.println(mTurnTime);
-        #endif
+        debugprint("tt new: ");
+        debugprintln(mTurnTime);
         mLastTime = now;
         if (mCallback) {
           mCallback(mTurnTime);
