@@ -44,9 +44,9 @@ void setup() {
   });
   stateMachine.setReleaseTimeCalculator([]() {
     auto now = micros();
-    auto lastCrossing = hallSpeedMonitor.lastMeasurementTimeUS();
+    auto lastCrossing = hallSpeedMonitor.lastMeasurementTime();
     auto timeInRound = now - lastCrossing;
-    return timeCalculation(hallSpeedMonitor.turnTimeUS(), timeInRound);
+    return timeCalculation(hallSpeedMonitor.turnTime(), timeInRound);
   });
 }
 
