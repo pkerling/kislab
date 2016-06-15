@@ -14,12 +14,20 @@ SpeedMonitor lightSpeedMonitor(PIN_LIGHT_SENSOR, 12, true);
 ServoControl servoControl(PIN_SERVO);
 TimeCalculation timeCalculation;
 StateMachine stateMachine(servoControl);
-  
+
+/**
+ * System setup
+ * 
+ * Instantiate components and connect them.
+ */
 void setup() {
+  Serial.begin(250000);
+  
   hallSpeedMonitor.setup();
   lightSpeedMonitor.setup();
   servoControl.setup();
   pinMode(PIN_TRIGGER, INPUT);
+  pinMode(PIN_LED1, OUTPUT);
 
   hallSpeedMonitor.setCallback([](unsigned long turnTime) {
     inhibitor.hallSpeedCallback(turnTime);
@@ -40,13 +48,17 @@ void setup() {
     auto timeInRound = now - lastCrossing;
     return timeCalculation(hallSpeedMonitor.turnTimeUS(), timeInRound);
   });
-  
-  Serial.begin(250000);
 }
 
+/**
+ * Main loop
+ */
 void loop() {
   hallSpeedMonitor.loop();
   lightSpeedMonitor.loop();
   
   stateMachine.advanceState();
+
+  // Output inhibition state to LED
+  digitalWrite(PIN_LED1, inhibitor.isInhibited());
 }
