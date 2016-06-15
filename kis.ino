@@ -28,6 +28,7 @@ void setup() {
   servoControl.setup();
   pinMode(PIN_TRIGGER, INPUT);
   pinMode(PIN_LED1, OUTPUT);
+  pinMode(PIN_LED2, OUTPUT);
 
   hallSpeedMonitor.setCallback([](unsigned long turnTime) {
     inhibitor.hallSpeedCallback(turnTime);
@@ -48,6 +49,8 @@ void setup() {
     auto timeInRound = now - lastCrossing;
     return timeCalculation(hallSpeedMonitor.turnTime(), timeInRound);
   });
+
+  Serial.println("Setup done");
 }
 
 /**
@@ -61,4 +64,6 @@ void loop() {
 
   // Output inhibition state to LED
   digitalWrite(PIN_LED1, inhibitor.isInhibited());
+  // Output release state to LED
+  digitalWrite(PIN_LED2, (stateMachine.state() == StateMachine::State::WAIT_RELEASE));
 }
