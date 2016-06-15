@@ -38,21 +38,6 @@ public:
   : mServoControl(servoControl)
   {}
 
-  void setReleaseTimeCalculator(TimeProviderType releaseTimeCalculator)
-  {
-    mReleaseTimeCalculator = releaseTimeCalculator;
-  }
-
-  void setTriggerProvider(StateProviderType triggerProvider)
-  {
-    mTriggerProvider = triggerProvider;
-  }
-
-  void setInhibitionProvider(StateProviderType inhibitionProvider)
-  {
-    mInhibitionProvider = inhibitionProvider;
-  }
-
   void advanceState()
   {
     switch (mState) {
@@ -74,13 +59,17 @@ public:
         }
       break;
       case State::IDLE:
-        if (mTriggerProvider()) {
+        // Start countdown only when not inhibited
+        if (mTriggerProvider() && !mInhibitionProvider()) {
           mState = State::WAIT_TIME;
           setWaitFromNow(mReleaseTimeCalculator());
         }
       break;
       case State::WAIT_TIME:
-        if (isWaitDone()) {
+        if (mInhibitionProvider) {
+          // Abort release
+          mState = State::IDLE;
+        } else if (isWaitDone()) {
           mServoControl.release();
           setWaitFromNow(200000);
           mState = State::RELEASING;
@@ -92,13 +81,23 @@ public:
           mState = State::BALL_FALL_THROUGH;
         }
       break;
-
-/*      case INHIBITED:
-        if (!isInhibited()) {
-          mState = IDLE;
-        }
-      break;*/
     }
+  }
+
+
+  void setReleaseTimeCalculator(TimeProviderType releaseTimeCalculator)
+  {
+    mReleaseTimeCalculator = releaseTimeCalculator;
+  }
+
+  void setTriggerProvider(StateProviderType triggerProvider)
+  {
+    mTriggerProvider = triggerProvider;
+  }
+
+  void setInhibitionProvider(StateProviderType inhibitionProvider)
+  {
+    mInhibitionProvider = inhibitionProvider;
   }
 };
 
