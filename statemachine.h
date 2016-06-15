@@ -145,6 +145,13 @@ public:
     }
   }
 
+  /**
+   * Get the state of the state machine
+   */
+  State state() const
+  {
+    return mState;
+  }
 
   /**
    * Set the function to be called to calculate the wait time for releasing the ball
