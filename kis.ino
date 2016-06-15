@@ -1,6 +1,4 @@
 
-#include <Servo.h>
-
 #include "config.h"
 #include "utility.h"
 

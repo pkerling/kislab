@@ -1,3 +1,6 @@
+
+#include <Servo.h>
+
 class ServoControl
 {
   int mPin;
