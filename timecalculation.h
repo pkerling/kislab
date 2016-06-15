@@ -20,8 +20,8 @@ public:
    * Calculate the time the next round of the turntable will approximately take
    * given the time the last round took
    * 
-   * The next round time is approximated by a second-order polynomial for turn
-   * times below 2 s and a fourth-order polynomial for times above 2 s.
+   * The next round time is approximated by a polynomial of degree two for turn
+   * times below 2 s and a polynomial of degree four for times above 2 s.
    * The coefficients were determined by linear regression applied to actual measurement
    * data of the turntable round times.
    */
