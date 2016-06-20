@@ -126,7 +126,7 @@ public:
       break;
       
       case State::WAIT_RELEASE:
-        if (mInhibitionProvider) {
+        if (mInhibitionProvider()) {
           // Abort release immediately
           mState = State::ARMED;
         } else if (isWaitDone()) {
