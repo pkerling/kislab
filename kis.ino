@@ -25,21 +25,31 @@ StateMachine stateMachine(servoControl);
 EdgeDetector firstButtonEdgeDetector;
 
 /**
- * System setup
- * 
- * Instantiate components and connect them.
+ * Setup pin modes for pins used in the \ref loop function directly
  */
-void setup() {
-  Serial.begin(250000);
-  
-  hallSpeedMonitor.setup();
-  lightSpeedMonitor.setup();
-  servoControl.setup();
+void setupPins()
+{
   pinMode(PIN_TRIGGER, INPUT);
   pinMode(PIN_LED1, OUTPUT);
   pinMode(PIN_LED2, OUTPUT);
   pinMode(PIN_BUTTON1, INPUT);
+}
 
+/**
+ * Call the setup functions of all relevant components
+ */
+void setupComponents()
+{
+  hallSpeedMonitor.setup();
+  lightSpeedMonitor.setup();
+  servoControl.setup();
+}
+
+/**
+ * Setup component interconnections
+ */
+void setupComponentConnections()
+{
   hallSpeedMonitor.setCallback([](unsigned long turnTime) {
     inhibitor.hallSpeedCallback(turnTime);
   });
@@ -63,14 +73,31 @@ void setup() {
   firstButtonEdgeDetector.setCallback([]() {
     Serial.println(hallSpeedMonitor.turnTime());
   });
+}
+
+/**
+ * System setup
+ * 
+ * Instantiate components and connect them.
+ */
+void setup()
+{
+  Serial.begin(250000);
+  
+  setupPins();
+  setupComponents();
+  setupComponentConnections();
+
   Serial.println("Setup done");
 }
 
 /**
  * Main loop
  */
-void loop() {
+void loop()
+{
   firstButtonEdgeDetector.provideState(digitalRead(PIN_BUTTON1));
+  
   hallSpeedMonitor.loop();
   lightSpeedMonitor.loop();
   
