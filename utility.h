@@ -6,7 +6,12 @@
  * \see Serial::println
  */
 template<typename T>
-void debugprintln(T const& t)
+void debugprintln(
+  T const&
+#ifdef DEBUG
+  t
+#endif
+)
 {
 #ifdef DEBUG
   Serial.println(t);
@@ -20,7 +25,12 @@ void debugprintln(T const& t)
  * \see Serial::print
  */
 template<typename T>
-void debugprint(T const& t)
+void debugprint(
+  T const&
+#ifdef DEBUG
+  t
+#endif
+)
 {
 #ifdef DEBUG
   Serial.print(t);
