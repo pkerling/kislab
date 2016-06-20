@@ -13,3 +13,5 @@ const int PIN_TRIGGER = 4;
 const int PIN_LED1 = 12;
 /// Pin number connected to the second LED
 const int PIN_LED2 = 13;
+/// Pin number connected to the first button
+const int PIN_BUTTON1 = 10;
