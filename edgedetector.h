@@ -1,7 +1,7 @@
 /**
  * Call a function every time a rising edge is detected on a signal
  * 
- * \ref updateState must be called every time a new signal state information
+ * \ref provideState must be called every time a new signal state information
  * is available or should be evaluated
  */
 class EdgeDetector

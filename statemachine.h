@@ -24,7 +24,7 @@ public:
     ARMED,
     /// Wait for release time, then release
     WAIT_RELEASE,
-    /// Wait for servo to complete releasing, then go to \ref BALL_FALL_THROUGH
+    /// Wait for servo to complete releasing, then go to \ref State::BALL_FALL_THROUGH
     RELEASING,
   };
 
