@@ -7,6 +7,7 @@
 #include "inhibitor.h"
 #include "timecalculation.h"
 #include "statemachine.h"
+#include "edgedetector.h"
 
 /// Global inhibitor
 Inhibitor inhibitor;
@@ -20,6 +21,8 @@ ServoControl servoControl(PIN_SERVO);
 TimeCalculation timeCalculation;
 /// Global state machine
 StateMachine stateMachine(servoControl);
+/// Global button 1 edge detector
+EdgeDetector firstButtonEdgeDetector;
 
 /**
  * System setup
@@ -35,6 +38,7 @@ void setup() {
   pinMode(PIN_TRIGGER, INPUT);
   pinMode(PIN_LED1, OUTPUT);
   pinMode(PIN_LED2, OUTPUT);
+  pinMode(PIN_BUTTON1, INPUT);
 
   hallSpeedMonitor.setCallback([](unsigned long turnTime) {
     inhibitor.hallSpeedCallback(turnTime);
@@ -56,6 +60,9 @@ void setup() {
     return timeCalculation(hallSpeedMonitor.turnTime(), timeInRound);
   });
 
+  firstButtonEdgeDetector.setCallback([]() {
+    Serial.println(hallSpeedMonitor.turnTime());
+  });
   Serial.println("Setup done");
 }
 
@@ -63,6 +70,7 @@ void setup() {
  * Main loop
  */
 void loop() {
+  firstButtonEdgeDetector.provideState(digitalRead(PIN_BUTTON1));
   hallSpeedMonitor.loop();
   lightSpeedMonitor.loop();
   
