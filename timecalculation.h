@@ -13,7 +13,7 @@ class TimeCalculation
  * 391 ms is the time the ball needs for falling (ignoring the servo motor)
  * derived by simple calculation from the fall distance.
  */
-const long BALL_FALL_TIME_US = 391000UL + 28125UL;
+const long BALL_FALL_TIME_US = 391000UL + 27344UL;
   
 public:
   /**
