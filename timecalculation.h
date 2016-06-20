@@ -28,7 +28,13 @@ public:
   unsigned long interpolateNextTurnTime(unsigned long lastTurnTime) const
   {
     double x = lastTurnTime;
-    if (lastTurnTime < 2000000UL) {
+    if (lastTurnTime < 500000UL) {
+      const double a2 = 7.73699143114947e-9;
+      const double a1 = 0.998685885;
+      const double a0 = 268.2445651096;
+      auto ret = a2 * pow(x, 2) + a1 * x + a0;
+      return ret;
+    } else if (lastTurnTime < 2000000UL) {
       const double a2 = 1.28978803947511e-8;
       const double a1 = 0.9910487474;
       const double a0 = 2585.5449062138;
