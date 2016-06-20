@@ -16,9 +16,9 @@
  */
 class Inhibitor
 {
-  /// Maximum turn time difference between measurements to tolerate in µs
-  const unsigned short MAXIMUM_TURN_TIME_DIFFERENCE = 10000;
-
+  /// Percentage of turn time difference relative to the current turn time
+  /// above which inhibition should start
+  const double RELATIVE_INHIBITION_THRESHOLD = 0.08;
   /// Previous turn time to compare new one against
   unsigned long mLastTurnTime = 0;
   
@@ -36,7 +36,12 @@ public:
   void lightSpeedCallback(unsigned long turnTime)
   {
     // Cast to (signed) long as result could be negative
-    if (abs(static_cast<long> (mLastTurnTime) - static_cast<long> (turnTime)) > MAXIMUM_TURN_TIME_DIFFERENCE) {
+    if (fabs(static_cast<double> (mLastTurnTime) - static_cast<double> (turnTime)) / static_cast<double> (turnTime) > RELATIVE_INHIBITION_THRESHOLD) {
+      debugprintln("=== inhibition");
+      debugprint("last turn time: ");
+      debugprintln(mLastTurnTime);
+      debugprint("this turn time: ");
+      debugprintln(turnTime);
       mInhibitRounds = 2;
     }
     mLastTurnTime = turnTime;
