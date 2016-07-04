@@ -138,7 +138,6 @@ public:
       
       case State::RELEASING:
         if (isWaitDone()) {
-          setWaitFromNow(200000);
           mState = State::BALL_FALL_THROUGH;
         }
       break;
